@@ -35,7 +35,33 @@ public class Plant {
 
 	//TODO: Step 1 = CSV string constructor
 
+	public Plant(String csv) {
+		if(csv == null || csv.length() == 0)
+		{
+			throw new IllegalArgumentException("No CSV given to constructor.");
+		}
+		String[] parts = csv.split(","); // should have 3 parts
 
+		if (parts.length != 3) {
+			throw new IllegalArgumentException(
+					"CSV string doesn't rhave requirned number of values. csv string = " + csv);
+		}
+
+		String name = parts[0];
+		double temp;
+		try {
+			temp = Double.parseDouble(parts[1]);
+		} catch(NumberFormatException nfe) {
+			throw new IllegalArgumentException("CSV string doesn't have a valid temp (double) as second value in csv string = " + parts[1]);
+		}
+		temp = Double.parseDouble(parts[1]);
+		String uses = parts[2];
+
+		if(!this.setAll(name, temp, uses))
+		{
+			throw new IllegalArgumentException("Invalid data provided after parsing, name= " + name + ", temp=" + temp + ", uses= " + uses);
+		}
+	}
 
 
 	// MUTATORS/SETTERS
